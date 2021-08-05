@@ -16,3 +16,8 @@ end
   @test Utility.iNext(6,2) == 1
   @test Utility.iNext(-6,5) == 0 #literally true, but may want to handle differently
 end
+
+@testset "test stringTable" begin
+  @test Utility.stringTable(["abc","defghi","jk","lmnopq"], 4, "|") == " abc|defg|  jk|lmno"
+  @test Utility.stringTable(["abcdef","ghi","jkl","mnopq"], 4, "|") == "abcd| ghi| jkl|mnop"
+end

@@ -10,6 +10,23 @@ module Utility
         return iWrap(i+1,n)
     end
 
+    function stringTable(strings::Vector{String}, lengthEach::Integer=3, separator::String="")::String
+        ret = ""
+        for str in strings
+            if length(str) < lengthEach
+                ret = string(ret, " "^(lengthEach-length(str)), str)
+            else
+                ret = string(ret, str[1:min(lengthEach, length(str))])
+            end
+            if str != last(strings)
+                ret = string(ret, separator)
+            end
+        end
+        return ret
+    end
+
+
+
 end
 
 
