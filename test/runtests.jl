@@ -1,5 +1,6 @@
 
 using Test
+using Unitful
 
 include("../src/Utility.jl")
 
@@ -20,4 +21,18 @@ end
 @testset "test stringTable" begin
   @test Utility.stringTable(["abc","defghi","jk","lmnopq"], 4, "|") == " abc|defg|  jk|lmno"
   @test Utility.stringTable(["abcdef","ghi","jkl","mnopq"], 4, "|") == "abcd| ghi| jkl|mnop"
+end
+
+
+function chirpLinear_amplitudeUnits() #what needs to be tested?
+  fstart = 1u"Hz"
+  fstop = 10u"Hz"
+  amp = 2
+  t,f,y = Utility.chirpLinear(fstart,fstop, 11u"s", amp)
+  return f[1] == fstart && f[end] == fstop
+  # plot(ustrip(chirp[1]), ustrip(chirp[2]))
+end
+
+@testset "test chirpLinear" begin
+  @test chirpLinear_amplitudeUnits()
 end
