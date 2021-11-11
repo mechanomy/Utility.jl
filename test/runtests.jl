@@ -18,6 +18,11 @@ end
   @test Utility.iNext(-6,5) == 0 #literally true, but may want to handle differently
 end
 
+@testset "test set bools" begin
+  @test Utility.eqTol(1,2) == false
+end
+
+
 @testset "test stringTable" begin
   @test Utility.stringTable(["abc","defghi","jk","lmnopq"], 4, "|") == " abc|defg|  jk|lmno"
   @test Utility.stringTable(["abcdef","ghi","jkl","mnopq"], 4, "|") == "abcd| ghi| jkl|mnop"
