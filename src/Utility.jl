@@ -3,14 +3,27 @@
 module Utility
     using Unitful
 
-    function iWrap(i::Integer, n::Integer)
+    """Given <n> elements in an array, wraps <i> around if it exceeds <n>"""
+    function iWrap(i::Integer, n::Integer)::Integer
         return ((i-1)%n)+1 #(things) to shift for 1-indexed arrays
     end
 
-    function iNext(i::Integer, n::Integer)
+    """Given <n> elements in an array, return the next <i+1> element after <i>, wrapping if necessary"""
+    function iNext(i::Integer, n::Integer)::Integer
         return iWrap(i+1,n)
     end
 
+    """Returns true if <low> <= <value> <= <high>"""
+    function within(low::Number, value::Number, high::Number)::Bool
+        return low <= value && value <= high
+    end
+
+    """Returns true if <low> <= <value> <= <high>"""
+    function eqTol(a::Number, b::Number, tol=1e-3)::Bool
+        return abs(a-b) <= tol
+    end
+
+    """Regularizes the <strings> vector, truncating to <lengthEach>, separated by <separator>"""
     function stringTable(strings::Vector{String}, lengthEach::Integer=3, separator::String="")::String
         ret = ""
         for str in strings
@@ -26,6 +39,7 @@ module Utility
         return ret
     end
 
+    """Creates a chirp signal from <start> to <stop> frequencies over <duration> time on timestep <ts> with <amplitude> about <offset>, shifted by <phase> and <timeStart>"""
     function chirpLinear(start::Unitful.Frequency, stop::Unitful.Frequency, duration::Unitful.Time, amplitude::Number, offset::Number=0, phase=0u"°", ts::Unitful.Time = 1e-3u"s", timeStart::Unitful.Time=0u"s")
         chirpRate = (stop-start)/duration
         t = 0u"s":ts:duration
