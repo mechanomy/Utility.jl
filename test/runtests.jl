@@ -41,3 +41,8 @@ end
 @testset "test chirpLinear" begin
   @test chirpLinear_amplitudeUnits()
 end
+
+@testset "Utility.eqTol" begin
+  @test Utility.eqTol( 25.4u"mm", 1u"inch" )
+  @test_throws Unitful.DimensionError Utility.eqTol( 25.4u"mm", 1u"°" )
+end

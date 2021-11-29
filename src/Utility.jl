@@ -3,6 +3,9 @@
 module Utility
     using Unitful
 
+    Angle{T} = Union{Quantity{T,NoDims,typeof(u"rad")}, Quantity{T,NoDims,typeof(u"°")}} where T
+
+
     """Given <n> elements in an array, wraps <i> around if it exceeds <n>"""
     function iWrap(i::Integer, n::Integer)::Integer
         return ((i-1)%n)+1 #(things) to shift for 1-indexed arrays
@@ -21,6 +24,10 @@ module Utility
     """Returns true if <low> <= <value> <= <high>"""
     function eqTol(a::Number, b::Number, tol=1e-3)::Bool
         return abs(a-b) <= tol
+    end
+    """Returns true if <low> <= <value> <= <high>"""
+    function eqTol(a::Unitful.Quantity, b::Unitful.Quantity, tol=1e-3)::Bool
+        return eqTol( ustrip(unit(a), a), ustrip(unit(a), b), tol )
     end
 
     """Regularizes the <strings> vector, truncating to <lengthEach>, separated by <separator>"""
