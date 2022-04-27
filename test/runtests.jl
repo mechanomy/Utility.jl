@@ -19,9 +19,10 @@ end
 end
 
 function eqTolMatrices()
-  A = rand(3,4);
-  B = A .+ 1e-4;
-  return Utility.eqTol(A,B, 1e-3)
+  A = rand(3,4)/3;
+  # println(typeof(A))
+  B = A .+ 1e-2;
+  return !Utility.eqTol(A,B, 1e-3)
 end
 function eqTolMatricesUnitful()
   A = rand(3,4)u"mm";
