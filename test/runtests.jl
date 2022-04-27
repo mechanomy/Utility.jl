@@ -18,8 +18,20 @@ end
   @test Utility.iNext(-6,5) == 0 #literally true, but may want to handle differently
 end
 
+function eqTolMatrices()
+  A = rand(3,4);
+  B = A .+ 1e-4;
+  return Utility.eqTol(A,B, 1e-3)
+end
+function eqTolMatricesUnitful()
+  A = rand(3,4)u"mm";
+  B = A .+ 1e-4u"mm";
+  return Utility.eqTol(A,B, 1e-3)
+end
 @testset "test set bools" begin
   @test Utility.eqTol(1,2) == false
+  @test eqTolMatrices()
+  @test eqTolMatricesUnitful()
 end
 
 
@@ -46,3 +58,4 @@ end
   @test Utility.eqTol( 25.4u"mm", 1u"inch" )
   @test_throws Unitful.DimensionError Utility.eqTol( 25.4u"mm", 1u"°" )
 end
+

@@ -26,6 +26,14 @@ module Utility
         return abs(a-b) <= tol
     end
     """Returns true if <low> <= <value> <= <high>"""
+    function eqTol(A::Matrix, B::Matrix, tol=1e-3)::Bool
+        ret = true
+        for (a,b) in zip(A, B)
+            ret &= eqTol(a,b, tol)
+        end
+        return ret
+    end
+    """Returns true if <low> <= <value> <= <high>"""
     function eqTol(a::Unitful.Quantity, b::Unitful.Quantity, tol=1e-3)::Bool
         return eqTol( ustrip(unit(a), a), ustrip(unit(a), b), tol )
     end
