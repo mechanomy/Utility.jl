@@ -28,7 +28,8 @@ module Utility
     end
 
     """Returns true if <low> <= <value> <= <high>"""
-    function eqTol(A::Matrix, B::Matrix, tol=1e-3)::Bool
+    # function eqTol(A::Matrix, B::Matrix, tol=1e-3)::Bool
+    function eqTol(A::AbstractMatrix, B::AbstractMatrix, tol=1e-3)::Bool
         ret = true
         for (a,b) in zip(A, B)
             ret &= eqTol(a,b, tol)

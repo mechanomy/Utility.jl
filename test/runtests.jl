@@ -1,6 +1,7 @@
 
 using Test
 using Unitful
+using StaticArrays #for defined-length arrays: SVector{3,T}
 
 include("../src/Utility.jl")
 
@@ -18,12 +19,22 @@ end
   @test Utility.iNext(-6,5) == 0 #literally true, but may want to handle differently
 end
 
+
+
 function eqTolMatrices()
   A = rand(3,4)/3;
   # println(typeof(A))
   B = A .+ 1e-2;
   return !Utility.eqTol(A,B, 1e-3)
 end
+
+"""Compares StaticArrays.SMatrix to LinearAlgebra.Matrix, both of which <: AbstractMatrix"""
+function eqTolMatricesMixed()
+  A = SMatrix{2,3}([1 2.1 3.2; 4.3 5.4 6.5])
+  B = Matrix([1 2.1 3.2; 4.3 5.4 6.5])
+  return Utility.eqTol(A,B, 1e-9)
+end
+
 function eqTolMatricesUnitful()
   A = rand(3,4)u"mm";
   B = A .+ 1e-4u"mm";
@@ -32,6 +43,7 @@ end
 @testset "test set bools" begin
   @test Utility.eqTol(1,2) == false
   @test eqTolMatrices()
+  @test eqTolMatricesMixed()
   @test eqTolMatricesUnitful()
 end
 
